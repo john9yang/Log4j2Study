@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="OFF">
+<Configuration>
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout
                     pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
         </Console>
+
+        <DynamoDBAppender name="dynamodb-logging" target="dynamodb">
+            <!-- Matches only FATAL level -->
+            <LevelRangeFilter minLevel="FATAL" maxLevel="FATAL" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Log4j2JsonEventLayout>
+                <KeyValuePair key="sp-eventSourceUUID" value="4800a410-81f9-476e-9dd0-ce8fd71ccd2a"/>
+                <KeyValuePair key="sp-eventSchemaVersion" value="4.1"/>
+                <KeyValuePair key="includeLogPropsFromLogEvent"
+                  value="threadName,loggerName,loggerFqcn"/>
+            </Log4j2JsonEventLayout>
+        </DynamoDBAppender>
+
     </Appenders>
     <Loggers>
         <Root level="debug" additivity="false">
             <AppenderRef ref="console" />
+            <AppenderRef ref="dynamodb-logging" />
         </Root>
     </Loggers>
 </Configuration>

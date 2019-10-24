@@ -10,6 +10,8 @@ public class Log4j2HelloWorldExample {
         LOGGER.debug("Debug Message Logged !!!");
         LOGGER.info("Info Message Logged !!!");
         LOGGER.error("Error Message Logged !!!", new NullPointerException("NullError"));
+
+        LOGGER.fatal("Dynamodb fatal test:{}","test");
     }
 
 }
